@@ -4,6 +4,7 @@ import (
 	"fmt" // for printing and scanning
 	"os"  // for cleaning terminal
 	"os/exec"
+	"runtime"
 )
 
 var field = [3][3]string{ // our gameplay field
@@ -166,7 +167,12 @@ func PrintField() {
 
 // clean up terminal
 func ClearScreen() {
+	system := runtime.GOOS
 	cmd := exec.Command("clear")
+
+	if system == "windows" {
+		cmd = exec.Command("cls")
+	}
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }

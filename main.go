@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"os"
+	"fmt" // for printing and scanning
+	"os"  // for cleaning terminal
 	"os/exec"
 )
 
-var field = [3][3]string{
+var field = [3][3]string{ // our gameplay field
 	{"1", "2", "3"},
 	{"4", "5", "6"},
 	{"7", "8", "9"},
@@ -15,27 +15,49 @@ var field = [3][3]string{
 var win bool
 var players = []string{"X", "O"}
 var turnNumber int
+var usedNumbers []string
 
-const Size = 3
+const Size = 3 // field size
 
 func main() {
 
 	player := players[0]
 	var number string
+
 	for turnNumber < Size*Size && !win {
+		// remove terminal garbage
+		ClearScreen()
+		// author signature :))))
 		fmt.Println("Tic-Tac-Goe by Hennadii")
-		turnNumber++
+		//fmt.Println(turnNumber)
+		// drawing field and player
 		PrintField()
 		fmt.Println("Player is ", player)
+		// giving user ability to choose place
 		fmt.Print("Enter a number to place: ")
 		fmt.Scanln(&number)
+		// checking for duplicate player placement
+		if !IsNumberUsed(usedNumbers, number) {
+			usedNumbers = append(usedNumbers, number)
+			turnNumber++
+		}
+		// Making a turn and changing player
 		field = PlacePlayer(player, number, field)
 		player = ChangePlayer(player)
-		ClearScreen()
 
 	}
-
+	// love fp code snippet
 	fmt.Println("")
+}
+
+// Checking if number is in slice
+func IsNumberUsed(used []string, number string) bool {
+	for _, v := range used {
+		if number == v {
+			return true
+		}
+	}
+	return false
 }
 
 // Places a player

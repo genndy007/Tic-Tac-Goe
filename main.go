@@ -23,6 +23,7 @@ func main() {
 
 	player := players[0]
 	var number string
+	var winner string
 
 	for turnNumber < Size*Size && !win {
 		// remove terminal garbage
@@ -45,7 +46,20 @@ func main() {
 		field = PlacePlayer(player, number, field)
 		player = ChangePlayer(player)
 
+		winner, win = CheckWin()
+
 	}
+
+	ClearScreen()
+	fmt.Println("Tic-Tac-Goe by Hennadii")
+	PrintField()
+
+	if win {
+		fmt.Println("Winner is ", winner)
+	} else {
+		fmt.Println("We got a draw")
+	}
+
 	// love fp code snippet
 	fmt.Println("")
 }
@@ -58,6 +72,42 @@ func IsNumberUsed(used []string, number string) bool {
 		}
 	}
 	return false
+}
+
+func ThreeEqual(a, b, c string) bool {
+	return a == b && b == c
+}
+
+func CheckWin() (string, bool) {
+	u1 := field[0][0]
+	u2 := field[0][1]
+	u3 := field[0][2]
+	u4 := field[1][0]
+	u5 := field[1][1]
+	u6 := field[1][2]
+	u7 := field[2][0]
+	u8 := field[2][1]
+	u9 := field[2][2]
+	switch {
+	case ThreeEqual(u1, u2, u3):
+		return u1, true
+	case ThreeEqual(u4, u5, u6):
+		return u4, true
+	case ThreeEqual(u7, u8, u9):
+		return u7, true
+	case ThreeEqual(u1, u4, u7):
+		return u1, true
+	case ThreeEqual(u2, u5, u8):
+		return u2, true
+	case ThreeEqual(u3, u6, u9):
+		return u3, true
+	case ThreeEqual(u1, u5, u9):
+		return u1, true
+	case ThreeEqual(u3, u5, u7):
+		return u3, true
+	default:
+		return "", false
+	}
 }
 
 // Places a player

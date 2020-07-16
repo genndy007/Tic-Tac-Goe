@@ -12,25 +12,31 @@ var field = [3][3]string{ // our gameplay field
 	{"7", "8", "9"},
 }
 
-var win bool
-var players = []string{"X", "O"}
+// constant for every tic-tac-toe
+const Size = 3
+
+// default players
+var players = [2]string{"X", "O"}
+
+// vars for turn counting and placing of players
 var turnNumber int
 var usedNumbers []string
+var number string
 
-const Size = 3 // field size
+// vars for win state and winner-player
+var win bool
+var winner string
 
 func main() {
-
+	// creating a player
 	player := players[0]
-	var number string
-	var winner string
 
+	// starting game cycle
 	for turnNumber < Size*Size && !win {
 		// remove terminal garbage
 		ClearScreen()
 		// author signature :))))
 		fmt.Println("Tic-Tac-Goe by Hennadii")
-		//fmt.Println(turnNumber)
 		// drawing field and player
 		PrintField()
 		fmt.Println("Player is ", player)
@@ -49,11 +55,12 @@ func main() {
 		winner, win = CheckWin()
 
 	}
-
+	// last time when we show our field
 	ClearScreen()
 	fmt.Println("Tic-Tac-Goe by Hennadii")
 	PrintField()
 
+	// checking at the end of game
 	if win {
 		fmt.Println("Winner is ", winner)
 	} else {
@@ -74,10 +81,12 @@ func IsNumberUsed(used []string, number string) bool {
 	return false
 }
 
+// golang doesn't give triple comparison :(
 func ThreeEqual(a, b, c string) bool {
 	return a == b && b == c
 }
 
+// checking if somebody won
 func CheckWin() (string, bool) {
 	u1 := field[0][0]
 	u2 := field[0][1]
@@ -132,9 +141,9 @@ func ChangePlayer(p string) string {
 	}
 
 	if index == 0 {
-		return "O"
+		return players[1]
 	}
-	return "X"
+	return players[0]
 }
 
 // Print a game field

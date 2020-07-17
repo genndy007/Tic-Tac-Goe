@@ -5,10 +5,14 @@ It's a simple implementation of a classic game for two, Tic-Tac-Toe, but for thi
 How to run
 ------------
 Way 1:     
-```go run .```    
+```
+go run .       
+```    
 Way 2:     
-```go build```      
-```./tic-tac-goe```    
+```
+go build              
+./tic-tac-goe      
+```    
 
 Rules
 -----------

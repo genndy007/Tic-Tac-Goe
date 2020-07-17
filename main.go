@@ -45,9 +45,11 @@ func main() {
 		fmt.Print("Enter a number to place: ")
 		fmt.Scanln(&number)
 		// checking for duplicate player placement
-		if !IsNumberUsed(usedNumbers, number) {
+		if IsANumber(number) && !IsNumberUsed(usedNumbers, number) {
 			usedNumbers = append(usedNumbers, number)
 			turnNumber++
+		} else {
+			continue
 		}
 		// Making a turn and changing player
 		field = PlacePlayer(player, number, field)
@@ -76,6 +78,16 @@ func main() {
 func IsNumberUsed(used []string, number string) bool {
 	for _, v := range used {
 		if number == v {
+			return true
+		}
+	}
+	return false
+}
+
+func IsANumber(input string) bool {
+	numbers := []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+	for _, v := range numbers {
+		if input == v {
 			return true
 		}
 	}
